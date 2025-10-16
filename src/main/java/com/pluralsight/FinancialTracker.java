@@ -204,8 +204,35 @@ public class FinancialTracker {
        Ledger menu
        ------------------------------------------------------------------ */
     private static void ledgerMenu(Scanner scanner) {
-        // TODO: Step 5 – Implement the Ledger menu
+        boolean running = true;
+        while (running) {
+            System.out.println("========================================");
+            System.out.println("                LEDGER MENU             ");
+            System.out.println("========================================");
+            System.out.println("A) View All Transactions");
+            System.out.println("D) View Deposits Only");
+            System.out.println("P) View Payments Only");
+            System.out.println("R) Reports");
+            System.out.println("H) Home");
+            System.out.print("Choose an option: ");
+
+            String input = scanner.nextLine().trim();
+
+            switch (input.toUpperCase()) {
+                case "A" -> displayLedger();
+                case "D" -> displayDeposits();
+                case "P" -> displayPayments();
+                case "R" -> reportsMenu(scanner);
+                case "H" -> running = false;
+                default -> System.out.println("⚠️ Invalid option. Please try again.");
+            }
+        }
     }
+
+
+
+
+
 
     /* ------------------------------------------------------------------
        Reports menu
