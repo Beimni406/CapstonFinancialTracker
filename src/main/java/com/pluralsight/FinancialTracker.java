@@ -155,7 +155,49 @@ public class FinancialTracker {
 
 
     private static void addPayment(Scanner scanner) {
-        // TODO: Step 4 – Implement adding payments
+        try {
+            System.out.print("Enter date (yyyy-MM-dd): ");
+            LocalDate date = LocalDate.parse(scanner.nextLine());
+
+            System.out.print("Enter time (HH:mm:ss): ");
+            LocalTime time = LocalTime.parse(scanner.nextLine());
+
+            System.out.print("Enter description: ");
+            String description = scanner.nextLine();
+
+            System.out.print("Enter vendor: ");
+            String vendor = scanner.nextLine();
+
+            System.out.print("Enter amount: ");
+            double amount = Double.parseDouble(scanner.nextLine());
+
+            // Validate that the user enters a positive number
+            if (amount <= 0) {
+                System.out.println("⚠️  Amount must be positive!");
+                return;
+            }
+
+            // Convert amount to negative (since it's a payment)
+            amount = -amount;
+
+            // Create a new Transaction object
+            Transaction t = new Transaction(date, time, description, vendor, amount);
+            transactions.add(t);
+
+            // Save the payment to file
+            try (java.io.BufferedWriter writer =
+                         new java.io.BufferedWriter(new java.io.FileWriter(FILE_NAME, true))) {
+                String line = String.format("%s|%s|%s|%s|%.2f",
+                        date, time, description, vendor, amount);
+                writer.newLine();
+                writer.write(line);
+            }
+
+            System.out.println("✅ Payment added successfully!\n");
+
+        } catch (Exception e) {
+            System.out.println("⚠️  Error adding payment: " + e.getMessage());
+        }
     }
 
     /* ------------------------------------------------------------------
