@@ -363,6 +363,13 @@ public class FinancialTracker {
     /* ------------------------------------------------------------------
        Utility parsers
        ------------------------------------------------------------------ */
-    private static LocalDate parseDate(String s) { return null; }
+    private static LocalDate parseDate(String s) {
+        try {
+            return LocalDate.parse(s, DATE_FMT);
+        } catch (Exception e) {
+            System.out.println("⚠️ Invalid date format. Please use yyyy-MM-dd.");
+            return null;
+        }
+    }
     private static Double parseDouble(String s) { return null; }
 }
