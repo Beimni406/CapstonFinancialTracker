@@ -238,8 +238,58 @@ public class FinancialTracker {
        Reports menu
        ------------------------------------------------------------------ */
     private static void reportsMenu(Scanner scanner) {
-        // TODO: Step 6 – Implement the Reports menu
+        boolean running = true;
+
+        while (running) {
+            System.out.println("========================================");
+            System.out.println("              REPORTS MENU              ");
+            System.out.println("========================================");
+            System.out.println("1) Month To Date");
+            System.out.println("2) Previous Month");
+            System.out.println("3) Year To Date");
+            System.out.println("4) Previous Year");
+            System.out.println("5) Search by Vendor");
+            System.out.println("6) Custom Search");
+            System.out.println("0) Back");
+            System.out.print("Choose an option: ");
+
+            String input = scanner.nextLine().trim();
+
+            switch (input) {
+                case "1" -> { // Month To Date
+                    LocalDate now = LocalDate.now();
+                    LocalDate start = now.withDayOfMonth(1);
+                    filterTransactionsByDate(start, now);
+                }
+                case "2" -> { // Previous Month
+                    LocalDate now = LocalDate.now();
+                    LocalDate firstOfPrev = now.minusMonths(1).withDayOfMonth(1);
+                    LocalDate endOfPrev = firstOfPrev.plusMonths(1).minusDays(1);
+                    filterTransactionsByDate(firstOfPrev, endOfPrev);
+                }
+                case "3" -> { // Year To Date
+                    LocalDate now = LocalDate.now();
+                    LocalDate start = LocalDate.of(now.getYear(), 1, 1);
+                    filterTransactionsByDate(start, now);
+                }
+                case "4" -> { // Previous Year
+                    LocalDate now = LocalDate.now();
+                    LocalDate start = LocalDate.of(now.getYear() - 1, 1, 1);
+                    LocalDate end = LocalDate.of(now.getYear() - 1, 12, 31);
+                    filterTransactionsByDate(start, end);
+                }
+                case "5" -> { // Search by Vendor
+                    System.out.print("Enter vendor name: ");
+                    String vendor = scanner.nextLine();
+                    filterTransactionsByVendor(vendor);
+                }
+                case "6" -> customSearch(scanner); // Bonus feature
+                case "0" -> running = false;
+                default -> System.out.println("⚠️ Invalid option. Please try again.");
+            }
+        }
     }
+
 
     /* ------------------------------------------------------------------
        Utility parsers
