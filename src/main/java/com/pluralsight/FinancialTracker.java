@@ -111,8 +111,48 @@ public class FinancialTracker {
        Add new transactions
        ------------------------------------------------------------------ */
     private static void addDeposit(Scanner scanner) {
-        // TODO: Step 3 – Implement adding deposits
+        try {
+            System.out.print("Enter date (yyyy-MM-dd): ");
+            LocalDate date = LocalDate.parse(scanner.nextLine());
+
+            System.out.print("Enter time (HH:mm:ss): ");
+            LocalTime time = LocalTime.parse(scanner.nextLine());
+
+            System.out.print("Enter description: ");
+            String description = scanner.nextLine();
+
+            System.out.print("Enter vendor: ");
+            String vendor = scanner.nextLine();
+
+            System.out.print("Enter amount: ");
+            double amount = Double.parseDouble(scanner.nextLine());
+
+            // Validate that deposit is positive
+            if (amount <= 0) {
+                System.out.println("⚠️  Amount must be positive!");
+                return;
+            }
+
+            // Create a new transaction object
+            Transaction t = new Transaction(date, time, description, vendor, amount);
+            transactions.add(t);
+
+            // Save it to the CSV file
+            try (java.io.BufferedWriter writer =
+                         new java.io.BufferedWriter(new java.io.FileWriter(FILE_NAME, true))) {
+                String line = String.format("%s|%s|%s|%s|%.2f",
+                        date, time, description, vendor, amount);
+                writer.newLine();
+                writer.write(line);
+            }
+
+            System.out.println("✅ Deposit added successfully!\n");
+
+        } catch (Exception e) {
+            System.out.println("⚠️  Error adding deposit: " + e.getMessage());
+        }
     }
+
 
     private static void addPayment(Scanner scanner) {
         // TODO: Step 4 – Implement adding payments
