@@ -315,6 +315,50 @@ public class FinancialTracker {
             }
         }
     }
+    private static void customSearch(Scanner scanner) {
+        System.out.println("========================================");
+        System.out.println("           CUSTOM SEARCH MENU           ");
+        System.out.println("========================================");
+        System.out.println("Leave any field blank to skip it.");
+
+        System.out.print("Start date (yyyy-MM-dd): ");
+        String startInput = scanner.nextLine().trim();
+
+        System.out.print("End date (yyyy-MM-dd): ");
+        String endInput = scanner.nextLine().trim();
+
+        System.out.print("Description: ");
+        String descInput = scanner.nextLine().trim();
+
+        System.out.print("Vendor: ");
+        String vendorInput = scanner.nextLine().trim();
+
+        System.out.print("Exact amount: ");
+        String amountInput = scanner.nextLine().trim();
+
+        LocalDate start = startInput.isEmpty() ? null : LocalDate.parse(startInput);
+        LocalDate end = endInput.isEmpty() ? null : LocalDate.parse(endInput);
+        Double amount = amountInput.isEmpty() ? null : Double.parseDouble(amountInput);
+
+        System.out.printf("%-12s %-10s %-25s %-20s %10s%n",
+                "Date", "Time", "Description", "Vendor", "Amount");
+        System.out.println("----------------------------------------------------------------------");
+
+        for (Transaction t : transactions) {
+            boolean match = true;
+
+            if (start != null && t.getDate().isBefore(start)) match = false;
+            if (end != null && t.getDate().isAfter(end)) match = false;
+            if (!descInput.isEmpty() && !t.getDescription().toLowerCase().contains(descInput.toLowerCase())) match = false;
+            if (!vendorInput.isEmpty() && !t.getVendor().toLowerCase().contains(vendorInput.toLowerCase())) match = false;
+            if (amount != null && t.getAmount() != amount) match = false;
+
+            if (match) {
+                System.out.printf("%-12s %-10s %-25s %-20s %10.2f%n",
+                        t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+            }
+        }
+    }
 
     /* ------------------------------------------------------------------
        Utility parsers
