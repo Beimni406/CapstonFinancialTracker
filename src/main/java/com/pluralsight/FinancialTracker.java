@@ -371,5 +371,11 @@ public class FinancialTracker {
             return null;
         }
     }
-    private static Double parseDouble(String s) { return null; }
-}
+    private static Double parseDouble(String s) {
+        try {
+            return Double.parseDouble(s);
+        } catch (Exception e) {
+            System.out.println("⚠️ Invalid number format. Please enter a valid amount.");
+            return null;
+        }
+    }}
