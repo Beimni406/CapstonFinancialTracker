@@ -290,6 +290,19 @@ public class FinancialTracker {
         }
     }
 
+    private static void filterTransactionsByDate(LocalDate start, LocalDate end) {
+        System.out.printf("%-12s %-10s %-25s %-20s %10s%n",
+                "Date", "Time", "Description", "Vendor", "Amount");
+        System.out.println("----------------------------------------------------------------------");
+
+        for (Transaction t : transactions) {
+            if ((t.getDate().isEqual(start) || t.getDate().isAfter(start)) &&
+                    (t.getDate().isEqual(end)   || t.getDate().isBefore(end))) {
+                System.out.printf("%-12s %-10s %-25s %-20s %10.2f%n",
+                        t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+            }
+        }
+    }
 
     /* ------------------------------------------------------------------
        Utility parsers
