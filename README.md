@@ -7,8 +7,12 @@ A Java Console App for Tracking Deposits and Payments
 ## User Stories
 
 
-- As a user, I want to be able to input my data, so that the application can process it accordingly.
-- As a user, I want to receive immediate feedback, so I can understand what to do next.
+- As a user, I want to **add deposits and payments** so that I can track my financial transactions in one place.
+- As a user, I want to **view a ledger of all transactions** so that I can easily review my spending and income history.
+- As a user, I want to **filter transactions by deposits or payments** so that I can focus on specific categories.
+- As a user, I want to **see the date, time, description, and vendor** of each transaction so that the records are detailed and clear.
+- As a user, I want to **save my data to a CSV file** so that my transaction history is stored safely and accessible even after closing the program.
+
 
 ## Setup
 Open in IntelliJ IDEA->Check Java SDK 17->File location is Capstone in our pluralsight folder
